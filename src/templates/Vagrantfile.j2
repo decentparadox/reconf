@@ -1,0 +1,13 @@
+Vagrant.configure("2") do |config|
+{{#each servers}}
+  config.vm.define "{{name}}" do |{{name}}|
+    {{name}}.vm.box = "ubuntu/bionic64"
+    {{name}}.vm.hostname = "{{name}}"
+    {{name}}.vm.network "public_network", auto_config: false
+    {{name}}.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "ansible/playbook.yml"
+      ansible.install = true  # Install Ansible on the guest VM
+    end
+  end
+{{/each}}
+end
